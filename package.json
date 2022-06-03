@@ -1,0 +1,47 @@
+{
+	"name": "gdfidl",
+	"displayName": "GdfidL",
+	"description": "GdfidL Language",
+	"version": "0.0.1",
+	"author": {
+		"name": "Yuki Abe",
+		"email": "abeyuki@post.kek.jp",
+		"url": "https://github.com/YUKI-SOKENDAI"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/YUKI-SOKENDAI/vscodeGdfidL"
+	},
+	"publisher": "YUKI-SOKENDAI",
+	"engines": {
+		"vscode": "^1.18.0"
+	},
+	"categories": [
+		"Languages"
+	],
+	"contributes": {
+		"languages": [
+			{
+				"id": "gdfidl",
+				"aliases": [
+					"GdfidL",
+					"gdfidl"
+				],
+				"extensions": [
+					".gdf"
+				],
+				"configuration": "./language-conf.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "gdfidl",
+				"scopeName": "source.gdfidl",
+				"path": "./syntaxes/gdfidl.tmLanguage.json"
+			}
+		]
+	},
+	"__metadata": {
+		"installedTimestamp": 1644895482647
+	}
+}

@@ -1,0 +1,319 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "GdfidL",
+	"scopeName": "source.gdfidl",
+	"patterns": [
+	  { "include": "#comments" },
+	  { "include": "#numbers" },
+	  { "include": "#particles" },
+	  { "include": "#types" },
+	  { "include": "#operators" },
+	  { "include": "#controls" },
+	  { "include": "#keywords" },
+	  { "include": "#functions" },
+	  { "include": "#objects" },
+	  { "include": "#internals" },
+	  { "include": "#math" },
+	  { "include": "#macros" },
+	  { "include": "#strings" },
+	  { "include": "#block" }
+	],
+	"repository": {
+	  "attributes": {
+		"patterns": [
+		  { "include" : "#attributes-stringval" },
+		  { "include" : "#attributes-singular" },
+		  { "include" : "#attributes-default" }
+		]
+	  },
+	  "attributes-stringval": {
+		"patterns": [
+		  {
+			"match": "(?xi)\\b(Get|Read|Close|Write|Thread|Map|Apply)\\s*(=)\\s*(.+?)\\s*(?=[,;\\s])",
+			"captures": {
+			  "1": {"name": "variable.other.attribute.gdfidl"},
+			  "2": {"name": "punctuation.gdfidl"},
+			  "3": {"name": "string.unquoted.format.gdfidl"}
+			}
+		  }
+		]
+	  },
+	  "attributes-singular": {
+		"patterns": [
+		  {
+			"match": "(?xi)\\b(?<!\\.)(define|text|-general|-wakes|-3darrow|-mesh|-stlfile|-fdtd|-lcharge|-port|-time|-fexport|doit)\\b",
+			"name": "variable.other.attribute.gdfidl"
+		  }
+		]
+	  },
+	  "attributes-default": {
+		"patterns": [
+		  {
+			"match": "(?xi)\\b([a-zA-Z]?[a-zA-Z0-9_]*)\\s*(=)",
+			"captures": {
+			  "1": {"name": "variable.other.attribute.gdfidl"},
+			  "2": {"name": "punctuation.gdfidl"}
+			}
+		  }
+		]
+	  },
+	  "functions": {
+		"patterns": [
+		  {
+			"begin": "(?xi)\\b(?<!\\.)(ToString)(\\s*\\()",
+			"beginCaptures": {
+			  "1": {"name": "support.function.gdfidl"},
+			  "2": {"name": "punctuation.gdfidl"}
+			},
+			"patterns": [
+			  { "include": "#innards" }
+			],
+			"end": "\\)",
+			"endCaptures": {
+			  "0": {"name": "punctuation.gdfidl"}
+			}
+		  }
+		]
+	  },
+	  "innards": {
+		"patterns": [
+		  { "include": "#numbers" },
+		  { "include": "#operators" },
+		  { "include": "#keywords" },
+		  { "include": "#objects" },
+		  { "include": "#internals" },
+		  { "include": "#math" },
+		  { "include": "#strings" }
+		]
+	  },
+	  "macros": {
+		"patterns": [
+		  { "include": "#macrodef-input" },
+		  { "include": "#macrodef-noinput" }
+		]
+	  },
+	  "macrodef-input": {
+		"patterns": [
+		  {
+			"begin": "(?xi)\\b([a-zA-Z_][a-zA-Z0-9_]*)(\\s*\\()(?=.*\\)\\s*:\\s*macro)",
+			"beginCaptures": {
+			  "1": {"name": "entity.name.function.macro.input.gdfidl"},
+			  "2": {"name": "punctuation.gdfidl"}
+			},
+			"end": "\\)",
+			"endCaptures": {
+			  "0": {"name": "punctuation.gdfidl"}
+			},
+			"patterns": [
+			  { "include": "#internals" },
+			  { "include": "#numbers" },
+			  { "include": "#strings" }
+			]
+		  }
+		]
+	  },
+	  "macrodef-noinput": {
+		"patterns": [
+		  {
+			"match": "(?xi)\\b([a-zA-Z]?[a-zA-Z0-9_]*)\\s*(:)\\s*(?=macro)",
+			"captures": {
+			  "1": {"name": "entity.name.function.macro.noinput.gdfidl"},
+			  "2": {"name": "punctuation.gdfidl"}
+			}
+		  }
+		]
+	  },
+	  "objects": {
+		"patterns": [
+		  {
+			"match": "(?xi)\\b(?<!\\.)(beam)(?=%|->)\\b",
+			"name": "support.class.gdfidl"
+		  }
+		]
+	  },
+	  "internals": {
+		"patterns": [
+		  {
+			"match": "(?xi)\\b(?<!\\.)(magnetic|electric|INF|EL)(?!\\.)\\b",
+			"name": "constant.language.gdfidl"
+		  },
+		  {
+			"match": "(?xi)\\b(?<!\\.)(file|infile|outfiles|shigh|impedances|showtext|symbol|arrows|lenarrows|maxlenarrows|material|show)\\b",
+			"name": "variable.language.internal.gdfidl"
+		  }
+		]
+	  },
+	  "keywords": {
+		"patterns": [
+		  {
+			"match": "(?i)\\b(?<!\\.)(bbxlow|bbxhigh|bbylow|bbyhigh|bbzlow|bbzhigh|spacing|pxlow|pxhigh|pylow|pyhigh|pzlow|pzhigh|cxlow|cxhigh|cylow|cyhigh|czlow|czhigh|zfixed|charge|sigma|xposition|yposition|shigh|)\\b",
+			"name": "keyword.control.conditional.gdfidl"
+		  },
+		  {
+			"match": "(?i)\\b(?<!\\.)(macro)(?=\\s*=)\\b",
+			"name": "keyword.control.macro.gdfidl"
+		  },
+		  {
+			"match": "(?i)\\b(?<!\\.)(end|abort|Update)\\b",
+			"name": "keyword.control.command.gdfidl"
+		  }
+		]
+	  },
+	  "controls": {
+		"patterns": [
+		  {
+			"begin": "(?xi)\\b(?<!\\.)(exec)(\\s*[\\,\\s])([a-zA-Z]?[a-zA-Z0-9_]*)(\\s*\\()",
+			"beginCaptures": {
+			  "1": {"name": "keyword.control.gdfidl"},
+			  "2": {"name": "punctuation.gdfidl"},
+			  "3": {"name": "entity.name.function.macro.input.gdfidl"},
+			  "4": {"name": "punctuation.gdfidl"}
+			},
+			"end": "\\)\\s*;",
+			"endCaptures": {
+			  "0": {"name": "punctuation.gdfidl"}
+			},
+			"patterns": [
+			  { "include": "#internals" },
+			  { "include": "#functions" },
+			  { "include": "#objects" },
+			  { "include": "#math" },
+			  { "include": "#particles" },
+			  { "include": "#numbers" },
+			  { "include": "#strings" }
+			]
+		  },
+		  {
+			"begin": "(?xi)\\b(?<!\\.)(Print)(\\s*[\\,\\s])",
+			"beginCaptures": {
+			  "1": {"name": "keyword.control.gdfidl"},
+			  "2": {"name": "punctuation.gdfidl"}
+			},
+			"end": ";",
+			"endCaptures": {
+			  "0": {"name": "punctuation.gdfidl"}
+			},
+			"patterns": [
+			  { "include": "#attributes" },
+			  { "include": "#flags" },
+			  { "include": "#internals" },
+			  { "include": "#functions" },
+			  { "include": "#objects" },
+			  { "include": "#math" },
+			  { "include": "#particles" },
+			  { "include": "#numbers" },
+			  { "include": "#strings" }
+			]
+		  }
+		]
+	  },
+	  "flags": {
+		"patterns": [
+		  {
+			"match": "(?xi)\\b(?<!\\.)(error|makethin|save|sectormap|seqedit)\\b",
+			"name": "constant.flag.gdfidl"
+		  }
+		]
+	  },
+	  "particles": {
+		"patterns": [
+		  {
+			"match": "(?xi)\\b(?<!\\.)(positron|electron|proton|antiproton|posmuon|negmuon|ion)\\b",
+			"name": "constant.numeric.particle.gdfidl"
+		  }
+		]
+	  },
+	  "math": {
+		"patterns": [
+		  {
+			"match": "(?xi)\\b(?<!\\.)(Statistics|ArcCos|ArcCosh|ArcSin|ArcSinh|ArcTan|ArcTanh|Cos|Cosh|Exp|Sqrt|Tan|Tanh|BesselI|BesselJ|BesselK|BesselY|BesselJZero|Erf|Erfc|Abs|Ceiling|Floor|Max|Min|MinMax|Mod|Negative|Round|Sign|FractionalPart|Det|Eigensystem|IdentityMatrix|Inner|LinearSolve|Outer|SingularValues|Transpose|GaussRandom|Random|SeedRandom|DiagonalMatrix|Plus)\\b",
+			"name": "support.function.gdfidl"
+		  }
+		]
+	  },
+	  "strings": {
+		"patterns": [
+		  {
+			"name": "string.quoted.double.gdfidl",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+			  {
+				"name": "constant.character.escape.gdfidl",
+				"match": "\\\\."
+			  }
+			]
+		  },
+		  {
+			"name": "string.quoted.single.gdfidl",
+			"begin": "'",
+			"end": "'",
+			"patterns": [
+			  {
+				"name": "constant.character.escape.gdfidl",
+				"match": "\\\\."
+			  }
+			]
+		  }
+		]
+	  },
+	  "numbers": {
+		"patterns": [
+		  {
+			"match": "\\b(?<!\\.)([0-9]+\\.{1}[0-9]*)([eEdD]{1}[\\-|\\+]?[0-9]+)?\\b",
+			"captures": {
+			  "1": {"name": "constant.numeric.float.gdfidl"},
+			  "2": {"name": "constant.numeric.exponential.gdfidl"}
+			}
+		  },
+		  {
+			"match": "\\b(?<!\\.)([0-9]+)([eEdD]{1}[\\-|\\+]?[0-9]+)?\\b",
+			"captures": {
+			  "1": {"name": "constant.numeric.integer.gdfidl"},
+			  "2": {"name": "constant.numeric.exponential.gdfidl"}
+			}
+		  },
+		  {
+			"match": "\\b(?<!\\.)(True|False)\\b",
+			"captures": {
+			  "1": {"name": "constant.numeric.boolean.gdfidl"}
+			}
+		  }
+		]
+	  },
+	  "comments": {
+		"patterns": [
+		  {
+			"begin": "#",
+			"end": "\\n",
+			"name": "comment.line.gdfidl"
+		  },
+		  {
+			"begin": "#",
+			"end": "\\n\\r",
+			"name": "comment.line.gdfidl"
+		  }
+		]
+	  },
+	  "types": {
+		"patterns": [
+		  {
+			"match": "(?i)\\b(?<!\\.)(const)\\b",
+			"name": "storage.modifier.gdfidl"
+		  },
+		  {
+			"match": "(?i)\\b(?<!\\.)(Real|int)\\b",
+			"name": "storage.type.gdfidl"
+		  }
+		]
+	  },
+	  "operators": {
+		"patterns": [
+		  {
+			"match": "==|<>|<|>|<=|=>",
+			"name": "keyword.operator.comparison.gdfidl"
+		  }
+		]
+	  }
+	}
+  }
