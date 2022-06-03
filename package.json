@@ -43,5 +43,10 @@
 	},
 	"__metadata": {
 		"installedTimestamp": 1644895482647
+	},
+	"devDependencies": {
+		"generator-code": "^1.6.11",
+		"vsce": "^2.9.1",
+		"yo": "^4.3.0"
 	}
 }

@@ -29,7 +29,7 @@
 	  "attributes-stringval": {
 		"patterns": [
 		  {
-			"match": "(?xi)\\b(Get|Read|Close|Write|Thread|Map|Apply)\\s*(=)\\s*(.+?)\\s*(?=[,;\\s])",
+			"match": "(?xi)\\b(hoge)\\s*(=)\\s*(.+?)\\s*(?=[,;\\s])",
 			"captures": {
 			  "1": {"name": "variable.other.attribute.gdfidl"},
 			  "2": {"name": "punctuation.gdfidl"},
@@ -41,7 +41,7 @@
 	  "attributes-singular": {
 		"patterns": [
 		  {
-			"match": "(?xi)\\b(?<!\\.)(define|text|-general|-wakes|-3darrow|-mesh|-stlfile|-fdtd|-lcharge|-port|-time|-fexport|doit)\\b",
+			"match": "(?xi)\\b(?<!\\.)(moge)\\b",
 			"name": "variable.other.attribute.gdfidl"
 		  }
 		]
@@ -134,11 +134,11 @@
 	  "internals": {
 		"patterns": [
 		  {
-			"match": "(?xi)\\b(?<!\\.)(magnetic|electric|INF|EL)(?!\\.)\\b",
+			"match": "(?xi)\\b(?<!\\.)(magnetic|electric|INF|EL|MAG)(?!\\.)\\b",
 			"name": "constant.language.gdfidl"
 		  },
 		  {
-			"match": "(?xi)\\b(?<!\\.)(file|infile|outfiles|shigh|impedances|showtext|symbol|arrows|lenarrows|maxlenarrows|material|show)\\b",
+			"match": "(?xi)\\b(?<!\\.)(bbxlow|bbxhigh|bbylow|bbyhigh|bbzlow|bbzhigh|spacing|pxlow|pxhigh|pylow|pyhigh|pzlow|pzhigh|cxlow|cxhigh|cylow|cyhigh|czlow|czhigh|zfixed|charge|sigma|xposition|yposition|shigh|file|infile|outfile|shigh|impedances|showtext|symbol|arrows|lenarrows|maxlenarrows|material|show|scratchbase|xlow|xhigh|ylow|yhigh|zlow|zhigh|originprime|showdata|name|scratchbase)\\b",
 			"name": "variable.language.internal.gdfidl"
 		  }
 		]
@@ -146,7 +146,7 @@
 	  "keywords": {
 		"patterns": [
 		  {
-			"match": "(?i)\\b(?<!\\.)(bbxlow|bbxhigh|bbylow|bbyhigh|bbzlow|bbzhigh|spacing|pxlow|pxhigh|pylow|pyhigh|pzlow|pzhigh|cxlow|cxhigh|cylow|cyhigh|czlow|czhigh|zfixed|charge|sigma|xposition|yposition|shigh|)\\b",
+			"match": "(?i)\\b(?<!\\.)(define|text|doit|general|wakes|3darrow|mesh|stlfile|fdtd|lcharge|port|time|fexport|brick)\\b",
 			"name": "keyword.control.conditional.gdfidl"
 		  },
 		  {
@@ -274,7 +274,7 @@
 			}
 		  },
 		  {
-			"match": "\\b(?<!\\.)(True|False)\\b",
+			"match": "\\b(?<!\\.)(True|False|yes|no)\\b",
 			"captures": {
 			  "1": {"name": "constant.numeric.boolean.gdfidl"}
 			}
